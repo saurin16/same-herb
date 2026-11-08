@@ -33,8 +33,9 @@
           <img id="photo-preview" alt="Label image being checked">
           <label>Detected text. Check it against the photo and correct any errors.<textarea id="detected-text" rows="7"></textarea></label>
         </div>
-        <button type="button" id="apply-scan">Use checked text in Label B</button>
-        <p class="fine">Check all suggested details and confirm this is a single-ingredient product. Blank fields need your input.</p>
+        <label class="single-ingredient"><input id="confirm-single" type="checkbox"> I checked the ingredients list. Valerian is the only active herb.</label>
+        <button type="button" id="apply-scan" disabled>Use checked text in Label B</button>
+        <p class="fine">For blends or unclear ingredients, keep the product leaflet and ask a pharmacist. Review any suggested fields after applying.</p>
       </div>
     </section>
     <section aria-labelledby="compare-title" id="compare">
@@ -43,7 +44,7 @@
         <p class="scope">Valerian root · single-ingredient examples</p>
       </div>
       <div class="compare-grid" id="panels"></div>
-      <p class="fine">Educational prototype. A preparation match alone cannot establish product approval, safety, effectiveness, or whether a product is appropriate for you.</p>
+      <p class="fine">Results show the category of the preparation in the EMA monograph. For the finished product’s classification and instructions, check its own leaflet. Ask a pharmacist about personal suitability.</p>
     </section>
     <section id="method" class="method">
       <p class="label">04 / METHODS &amp; SOURCE</p>

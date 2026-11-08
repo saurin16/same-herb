@@ -8,9 +8,17 @@ From this directory, run `python3 -m http.server 8767 --bind 127.0.0.1` and open
 
 ## Photo reader
 
-Choose **Try sample photo** or select a label image from your device. Tesseract.js 7.0.0 downloads OCR assets and runs its trained text recognition model in the browser. The image and recognized text stay in that browser. Check the editable transcript against the picture, then use it in Label B and review the suggested fields. The original manual comparison works without OCR.
+Choose **Try sample photo** or select a label image from your device. Tesseract.js 7.0.0 downloads OCR assets and runs its trained text recognition model in the browser. The image and recognized text stay in that browser. Check the editable transcript against the picture and verify that valerian is the only active herb. Then use the text in Label B and review the suggested fields. The original manual comparison works without OCR.
 
 The mapper looks for explicit label details, including ethanol percentage basis and drug-to-extract ratio. It leaves unread or unsupported fields blank. Photo quality and OCR errors affect extraction, so check all details before interpreting the result. The synthetic sample label is included in this repository. [Tesseract.js and its license](https://github.com/naptha/tesseract.js/tree/v7.0.0)
+
+## Checks against real product information
+
+- Browser OCR was tested on raster images of pages 1 and 4 of the [Kalms Night manufacturer leaflet](https://www.kalmsrange.com/userfiles/file/3008-04-kalms-night-pil.pdf). The cover lacked enough preparation details. The ingredients page yielded the dry extract and 60% ethanol by volume. It expresses equivalence by weight, so the tool left the explicit DER field empty and directed the reader to verify it. The leaflet's finished-product classification is traditional herbal registration, which the EMA preparation comparison does not determine.
+- A text transcription of the [Kiwiherb Valerian Oral Liquid composition](https://assets.hpra.ie/products/Human/34989/LicenseSPC_TR1734-006-001_06102017150035.pdf) was routed outside scope because the preparation is a liquid extract. This was a parser check.
+- [NIH's record for Nighty Night Extra](https://dsld.od.nih.gov/label/306990) shows why checking the ingredient list matters. The real tea includes several active herbs. The scanned-label flow requires confirmation that valerian is the only active herb before applying suggested fields.
+
+These are limited spot checks using digital leaflets and a transcription. No handheld photos, shopper study, or clinical assessment was performed.
 
 ## Evidence and limits
 

@@ -76,11 +76,15 @@ const review = document.querySelector("#scan-review");
 const detected = document.querySelector("#detected-text");
 const preview = document.querySelector("#photo-preview");
 let previewUrl;
+const confirmed = document.querySelector("#confirm-single");
+const apply = document.querySelector("#apply-scan");
 
-async function scan(loadImage) {
+async function scan(loadImage, isSample = false) {
   photo.disabled = sample.disabled = true;
   review.hidden = true;
   detected.value = "";
+  confirmed.checked = isSample;
+  apply.disabled = !isSample;
   status.textContent = "Loading the text reader…";
   try {
     const image = await loadImage();
@@ -118,7 +122,6 @@ sample.addEventListener("click", () => scan(async () => {
   const response = await fetch("./sample-label.png");
   if (!response.ok) throw new Error("Sample unavailable.");
   return response.blob();
-}));
-document.querySelector("#apply-scan").addEventListener("click", () => {
-  labelB.apply(parseLabel(detected.value));
-});
+}, true));
+confirmed.addEventListener("change", () => { apply.disabled = !confirmed.checked; });
+apply.addEventListener("click", () => { labelB.apply(parseLabel(detected.value)); });

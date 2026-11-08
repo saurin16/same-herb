@@ -24,7 +24,10 @@ export function parseLabel(text) {
   const ethanol = normalized.match(/\bethanol\s*(\d+(?:\.\d+)?)\s*%\s*(?:\(?\s*(v\s*\/\s*v|m\s*\/\s*m)\s*\)?)?/u);
   const botanical = /\bvaleriana officinalis\b|\bvalerian root\b/u.test(normalized) ? "valerian" : "";
   const part = /\b(?:root|radix)\b/u.test(normalized) ? "root" : "";
-  const form = /\bdry extract\b/u.test(normalized) ? "dry" : /\b(?:cut|comminuted)\b/u.test(normalized) && /\btea\b/u.test(normalized) ? "tea" : "";
+  let form = "";
+  if (/\b(?:liquid extract|tincture|essential oil)\b/u.test(normalized)) form = "other";
+  else if (/\bdry extract\b/u.test(normalized)) form = "dry";
+  else if (/\b(?:cut|comminuted)\b/u.test(normalized) && /\btea\b/u.test(normalized)) form = "tea";
   const solvent = /\bethanol\b/u.test(normalized) ? "ethanol" : /(?:extraction solvent|solvent)\s*:\s*water\b/u.test(normalized) ? "water" : "";
   return {
     botanical, part, form, solvent,

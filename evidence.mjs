@@ -35,8 +35,11 @@ export function assess(input) {
   if (input.form === "tea") {
     return {status:"traditional", row:rows[0]};
   }
-  if (!input.solvent || !String(input.der ?? "").trim()) {
-    return {status:"incomplete", reason:"Look for the extraction solvent and drug-to-extract ratio, such as 5:1."};
+  const missing = [];
+  if (!input.solvent) missing.push("extraction solvent");
+  if (!String(input.der ?? "").trim()) missing.push("drug-to-extract ratio (DER)");
+  if (missing.length) {
+    return {status:"incomplete", reason:"Look in the leaflet’s ingredients section for the " + missing.join(" and ") + "."};
   }
   const span = ratio(input.der);
   if (!span) return {status:"incomplete", reason:"Enter a valid ratio such as 5:1 or 4–6:1."};
