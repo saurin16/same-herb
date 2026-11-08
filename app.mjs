@@ -1,4 +1,5 @@
 import { assess, examples, source } from "./evidence.mjs";
+import { parseLabel, readLabel } from "./label-reader.mjs";
 
 const headings = {
   traditional:"Traditional use",
@@ -53,7 +54,71 @@ function createPanel(side, initial) {
   preset.value = initial;
   load(initial);
   panels.append(panel);
+  return {
+    apply(fields) {
+      for (const [field, value] of Object.entries(fields)) form.elements.namedItem(field).value = value;
+      preset.value = "custom";
+      load("custom");
+      render();
+      panel.scrollIntoView({block:"nearest"});
+      name.setAttribute("tabindex", "-1");
+      name.focus({preventScroll:true});
+    },
+  };
 }
 
 createPanel("A", "tea");
-createPanel("B", "extract");
+const labelB = createPanel("B", "extract");
+const photo = document.querySelector("#label-photo");
+const sample = document.querySelector("#scan-sample");
+const status = document.querySelector("#scan-status");
+const review = document.querySelector("#scan-review");
+const detected = document.querySelector("#detected-text");
+const preview = document.querySelector("#photo-preview");
+let previewUrl;
+
+async function scan(loadImage) {
+  photo.disabled = sample.disabled = true;
+  review.hidden = true;
+  detected.value = "";
+  status.textContent = "Loading the text reader…";
+  try {
+    const image = await loadImage();
+    const text = await readLabel(image, percent => {
+      status.textContent = "Reading label · " + percent + "%";
+    });
+    if (!text) throw new Error("No text found.");
+    if (previewUrl) URL.revokeObjectURL(previewUrl);
+    previewUrl = URL.createObjectURL(image);
+    preview.src = previewUrl;
+    detected.value = text;
+    review.hidden = false;
+    status.textContent = "Text detected. Check it before using it.";
+    detected.focus();
+  } catch {
+    status.textContent = "This photo could not be read. Try a clearer JPEG or PNG, or enter the label details below.";
+  } finally {
+    photo.value = "";
+    photo.disabled = sample.disabled = false;
+  }
+}
+
+photo.addEventListener("change", () => {
+  const file = photo.files[0];
+  if (!file) return;
+  if (file.size > 12 * 1024 * 1024) {
+    photo.value = "";
+    review.hidden = true;
+    status.textContent = "Choose an image under 12 MB.";
+    return;
+  }
+  void scan(() => file);
+});
+sample.addEventListener("click", () => scan(async () => {
+  const response = await fetch("./sample-label.png");
+  if (!response.ok) throw new Error("Sample unavailable.");
+  return response.blob();
+}));
+document.querySelector("#apply-scan").addEventListener("click", () => {
+  labelB.apply(parseLabel(detected.value));
+});
