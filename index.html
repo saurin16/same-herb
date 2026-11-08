@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f1ea">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='9' fill='%233d2a58'/%3E%3Ctext x='11' y='30' font-size='29' fill='white'%3E%3F%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./app.mjs"></script>
+  <title>Same Herb? · Read the preparation</title>
+</head>
+<body>
+  <header class="bar"><a href="./" class="wordmark">Same Herb<span>?</span></a><a href="#method">About the evidence</a><span class="edition">ETHNOHACK 2026 / TRACK 04</span></header>
+  <main>
+    <section class="hero">
+      <p class="label">01 / THE LABEL CHECK</p>
+      <h1>Same herb.<br><em>Same evidence?</em></h1>
+      <p>Valerian tea and valerian extract can sit side by side on the shelf. Compare what their labels say with what the EMA actually evaluated.</p>
+    </section>
+    <section aria-labelledby="compare-title" id="compare">
+      <div class="section-head">
+        <div><p class="label">02 / THE COMPARISON</p><h2 id="compare-title">Read past the herb name</h2></div>
+        <p class="scope">Valerian root · single-ingredient examples</p>
+      </div>
+      <div class="compare-grid" id="panels"></div>
+      <p class="fine">Educational prototype. A preparation match alone cannot establish product approval, safety, effectiveness, or whether a product is appropriate for you.</p>
+    </section>
+    <section id="method" class="method">
+      <p class="label">03 / METHODS &amp; SOURCE</p>
+      <h2>What counts as a match?</h2>
+      <div class="method-grid">
+        <p><strong>Match the preparation.</strong> Check plant part and form first. For an extract, the solvent, percentage basis, and drug-to-extract ratio can change the result. A label’s full ratio range must fit the source range.</p>
+        <p><strong>Trace the evidence.</strong> Results point to the exact section of the EMA monograph. Coverage is limited to four preparation records. Unclear or out-of-scope labels get an explanation. <a href="https://www.ema.europa.eu/en/medicines/herbal/valerianae-radix">View the EMA source index</a>.</p>
+      </div>
+    </section>
+  </main>
+  <footer><span class="wordmark">Same Herb<span>?</span></span><span>ETHNOHACK · DIGITAL HEALTH &amp; PHYTOTHERAPY</span></footer>
+  <template id="panel">
+    <article class="panel">
+      <div class="panel-head"><p class="label panel-label"></p><h3 class="product"></h3></div>
+      <label class="preset">Example label<select name="preset"><option value="tea">Valerian root tea</option><option value="extract">Valerian dry extract</option><option value="vague">Valerian capsules · incomplete label</option><option value="custom">Enter label details</option></select></label>
+      <details>
+        <summary>Review or edit label details</summary>
+        <form class="fields">
+          <label>Botanical name<select name="botanical"><option value="">Unspecified</option><option value="valerian">Valeriana officinalis</option><option value="other">Other or blended ingredients</option></select></label>
+          <label>Plant part<select name="part"><option value="">Unspecified</option><option value="root">Root</option><option value="leaf">Leaf or another part</option></select></label>
+          <label>Preparation<select name="form"><option value="">Unspecified</option><option value="tea">Cut root for tea</option><option value="dry">Oral dry extract</option><option value="other">Oil, tincture or other</option></select></label>
+          <label>Extraction solvent<select name="solvent"><option value="">Unspecified</option><option value="ethanol">Ethanol</option><option value="water">Water</option><option value="other">Other solvent</option></select></label>
+          <label>Ethanol percentage<input name="concentration" type="number" min="0" max="100" step="any" placeholder="e.g. 60"></label>
+          <label>Percentage basis<select name="basis"><option value="">Unspecified</option><option value="vv">By volume (v/v)</option><option value="mm">By mass (m/m)</option></select></label>
+          <label>Drug-to-extract ratio<input name="der" placeholder="e.g. 5:1 or 4–6:1" maxlength="20"></label>
+        </form>
+      </details>
+      <div class="result" aria-live="polite"><p class="label result-status"></p><h4></h4><p class="result-copy"></p><a class="source"></a></div>
+    </article>
+  </template>
+</body>
+</html>
